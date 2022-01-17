@@ -1,0 +1,218 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">
+    File upload in progress... Please wait
+  </p></ngx-spinner
+>
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-plus-circle ml-2 mt-2"></i> Payout Account File Upload
+    <button
+      class="btn btn-secondary pull-right"
+      *appUserAccess="[roleAccess.viewPayoutAccountHistory]"
+      (click)="toViewFileHistory()"
+    >
+      View History
+    </button>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Merchant Id :
+            <span class="value">
+              {{ merchantData?.merchantId }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Merchant Name :
+            <span class="value">
+              {{ merchantData?.merchantName | titlecase }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Checksum :
+            <span class="value">{{ fileData?.checksum }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Status : <span class="value">{{ fileData?.status }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Failure Record Count :
+            <span class="value">{{ fileData?.failureRecordCount }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Failure Total Amount :
+            <span class="value">
+              {{ fileData?.failureTotalAmount | number: "1.2-2" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Success Record Count :
+            <span class="value">{{ fileData?.successRecordCount }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Success Total Amount :
+            <span class="value">
+              {{ fileData?.successTotalAmount | number: "1.2-2" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Duplicate Record Count :
+            <span class="value">{{ fileData?.duplicateRecordCount }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="pair p-3">
+          <div class="heading">
+            Duplicate Total Amount :
+            <span class="value">
+              {{ fileData?.duplicateTotalAmount | number: "1.2-2" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-12">
+        <div class="pair p-3">
+          <div class="heading">
+            File :
+            <span class="value">
+              {{ fileData?.fileName }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="uploadedFileView">
+      <div class="col-md-12 d-flex">
+        <div class="col-md-2 mt-3 p-3" style="padding-left: 0">
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            (click)="
+              downloadFile(fileData?.payoutFileUploadId, fileData?.fileName)
+            "
+          >
+            Download
+          </button>
+        </div>
+        <div class="col-md-2 mt-3 p-3">
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            (click)="goBackUpload()"
+          >
+            Upload New File
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!uploadedFileView">
+      <form [formGroup]="uploadFileForm" class="d-flex" style="width: 100%">
+        <div class="col-md-6">
+          <div class="pair p-3">
+            <div class="heading mb-1">Upload File</div>
+            <input
+              #fileInput
+              type="file"
+              accept=".csv"
+              (change)="onSelectFile($event, 'old')"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="pair p-3">
+            <div class="heading mb-1">Checksum</div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="checksum"
+              autocomplete="off"
+              formControlName="checksum"
+              [ngClass]="{
+                'is-invalid': formSubmitted && f.checksum.errors
+              }"
+              required
+            />
+            <div
+              *ngIf="formSubmitted && f.checksum.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.checksum.errors.required">checksum is required</div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row" *ngIf="!uploadedFileView">
+      <div class="col-md-5"></div>
+      <div class="col-md-5"></div>
+      <div class="col-md-2 d-flex">
+        <button
+          type="button"
+          class="btn btn-block btn-danger p-2 mt-2 mr-1r"
+          (click)="resetForm()"
+        >
+          Reset
+        </button>
+        <button
+          type="button"
+          class="btn btn-block btn-primary p-2 mt-2"
+          *appUserAccess="[roleAccess.viewFileUpload]"
+          (click)="saveUploadData()"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

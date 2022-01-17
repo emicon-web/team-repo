@@ -1,0 +1,98 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Payout Account Details</div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Merchant Id</div>
+                  <div class="value">
+                    {{ merchantData.merchantId }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Merchant Name</div>
+                  <div class="value">
+                    {{ merchantData.merchantName | titlecase }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Payout Account Id</div>
+                  <div class="value">{{ data.virtualAccountID }}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Description</div>
+                  <div class="value">{{ data.description }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Account Balance</div>
+                  <div class="value">{{ data.balance | number: "1.2-2" }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2 d-flex">
+          <!-- <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            (click)="uploadFileStatusChange()"
+          >
+            Upload File
+          </button> -->
+          <!-- <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            *appUserAccess="[roleAccess.editVirtualAccount]"
+            (click)="toInstaPayout()"
+          >
+            Insta Payout
+          </button> -->
+          <!-- <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            *appUserAccess="[roleAccess.editVirtualAccount]"
+            (click)="toSelfPayout()"
+          >
+            Self Payout
+          </button> -->
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

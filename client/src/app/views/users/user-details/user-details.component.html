@@ -1,0 +1,97 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">User Details</div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-5">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Name</div>
+                  <div class="value">
+                    {{ data?.userFirstName }} {{ data?.userLastName }}
+                  </div>
+                </div>
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Email Id</div>
+                  <div class="value">{{ data?.userEmail }}</div>
+                </div>
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Last Login Date</div>
+                  <div class="value">
+                    {{ data?.userLastSuccessLogin | date: "medium" }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">User Id</div>
+                  <div class="value">{{ data?.userName }}</div>
+                </div>
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Status</div>
+                  <div class="value">
+                    <div *ngIf="data?.userIsActive == true">Active</div>
+                    <div *ngIf="data?.userIsActive == false">In Active</div>
+                  </div>
+                </div>
+                <div class="pair mb-2 p-3">
+                  <div class="heading">Mobile Number</div>
+                  <div class="value">{{ data?.userPhone }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">User Type</div>
+                  <div class="value">{{ data?.userType }}</div>
+                </div>
+              </div>
+              <div class="col-md-5" *ngIf="data?.userType === 'ISSUER'">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">issuer ID</div>
+                  <div class="value">{{ data?.issuerId }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 d-flex">
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            *appUserAccess="[roleAccess.editUser]"
+            (click)="editUser()"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-block btn-danger p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+        </div>
+        <!-- <button type="button" class="btn btn-block btn-primary p-2">GENERATE MFA KEY</button>
+          <button type="button" class="btn btn-block btn-primary p-2">DOWNLOAD MFA KEY</button> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+@import "../../../../scss/style.scss";
+.table-row {
+  cursor: pointer;
+}
+.fa-plus-circle {
+  cursor: pointer;
+}
+table {
+  font-size: $font-size;
+}
+.item-number {
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.item-number-active {
+  background-color: #2199e8;
+  color: white;
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.heading {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: $heading-color;
+}
+.value {
+  font-weight: 500;
+  font-size: 0.8rem;
+  // text-transform: uppercase;
+  color: $value-color;
+}
+
+.radio-label {
+  font-size: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+.input-group {
+  padding: 0 !important;
+}
+.m-t-2 {
+  margin-top: 1.8rem;
+}
+.req-error {
+  color: red;
+  font-size: 0.8rem;
+}
+.mb--2 {
+  margin-bottom: -2rem;
+}
+.focus-input {
+  border: 2px groove #b2c3c5;
+}
+
+.payout-select {
+  width: 100%;
+  margin-left: 10px;
+  margin-top: -5px;
+}
+
+.radio-type {
+  display: flex;
+  // margin-left: 1rem;
+}
+
+.input-box {
+  margin-top: -4px;
+}
+
+.srch-btn {
+  margin-top: -7px;
+}
+
+.srch-btn-text {
+  margin-left: 2rem;
+}
+
+.mt-1 {
+  margin-top: 1rem !important;
+}

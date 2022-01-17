@@ -1,0 +1,252 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="row mt-3" *appUserAccess="[roleAccess.getVirtualAccounts]">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <select
+      class="form-select form-control-lg"
+      name="virtualId"
+      [ngModelOptions]="{ standalone: true }"
+      [(ngModel)]="virtualId"
+      (change)="getBalanceData($event)"
+      style="width: 100%; border-color: lightgray;"
+    >
+      <option selected value="">Select Payout Account Id</option>
+      <option
+        [attr.value]="item.virtualAccountID"
+        [attr.selected]="item.virtualAccountID === 0 ? true : null"
+        *ngFor="let item of collection; let i = index"
+      >
+        {{ item?.virtualAccountID }}
+      </option>
+    </select>
+    <p class="req-error" *ngIf="error">Please select Payout Account Id</p>
+  </div>
+  <div class="col-md-4">
+    <div
+      class="btn-group"
+      dropdown
+      style="float: right"
+      placement="bottom right"
+    >
+      <button
+        id="button-animated"
+        dropdownToggle
+        type="button"
+        class="btn btn-primary dropdown-toggle"
+        aria-controls="dropdown-animated"
+        *appUserAccess="[roleAccess.viewPendingApproval]"
+      >
+        Pending Approvals<span class="caret"></span>
+      </button>
+      <p class="badge-all" *appUserAccess="[roleAccess.viewPendingApproval]">
+        {{ totalCount }}
+      </p>
+      <ul
+        id="dropdown-animated"
+        *dropdownMenu
+        class="dropdown-menu dropdown-menu-right"
+        role="menu"
+        aria-labelledby="button-animated"
+      >
+        <li
+          role="menuitem"
+          *appUserAccess="[roleAccess.viewPendinggApprovalFile]"
+        >
+          <a class="dropdown-item" routerLink="/virtual-accounts/files"
+            >Files
+            <span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.uploadfileapprovalCount
+            }}</span></a
+          >
+        </li>
+        <li role="menuitem" *appUserAccess="[roleAccess.viewInstaPayout]">
+          <a class="dropdown-item" routerLink="/approve/insta-payout"
+            >Insta Payouts<span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.instaPayoutsCount
+            }}</span></a
+          >
+        </li>
+        <li role="menuitem" *appUserAccess="[roleAccess.viewApiPayout]">
+          <a class="dropdown-item" routerLink="/approve/api-payout"
+            >API Payouts<span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.instaPayoutsApiCount
+            }}</span></a
+          >
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" routerLink="/approve/self-payout"
+            >Self Payouts<span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.selfpayCount
+            }}</span></a
+          >
+        </li>
+        <li role="menuitem" *appUserAccess="[roleAccess.viewAccountClosure]">
+          <a
+            class="dropdown-item"
+            routerLink="/virtual-accounts/closed-virtual-accounts"
+            >Account Closure<span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.accountCloseCount
+            }}</span></a
+          >
+        </li>
+        <li
+          role="menuitem"
+          *appUserAccess="[roleAccess.viewCancelPayoutButton]"
+        >
+          <a class="dropdown-item" routerLink="/approve/cancel-payout"
+            >Cancel Payout<span class="badge badge-secondary bg-secondary">{{
+              pendingCountData?.cancelPayoutCount
+            }}</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3 p-3" *appUserAccess="[roleAccess.getVirtualAccounts]">
+  <div class="col-md-4" align="center">
+    <div class="heading">
+      Account Status :
+      <span class="value">{{ payoutData?.accountStatus }}</span>
+    </div>
+  </div>
+  <div class="col-md-4" align="center">
+    <div class="heading">
+      Low Balance Threshold :
+      <span
+        class="value"
+        [ngClass]="
+          payoutData?.accountBalance < payoutData?.lowBalanceThreshold
+            ? 'lower'
+            : 'greater'
+        "
+        > ₹ {{ payoutData?.lowBalanceThreshold | number: "1.2-2" }}</span
+      >
+    </div>
+  </div>
+  <div class="col-md-4" align="center">
+    <div class="heading">
+      Balance :
+      <span class="value"
+        >₹ {{ payoutData?.accountBalance | number: "1.2-2" }}</span
+      >
+    </div>
+  </div>
+</div>
+
+<div
+  class="row mt-5 d-block pt-point5"
+  *appUserAccess="[roleAccess.getVirtualAccounts]"
+>
+  <div class="d-flex">
+    <div class="col-md-2"></div>
+    <div class="input-group col-md-8">
+      <div class="col-md-4 d-flex">
+        <input
+          type="radio"
+          [(ngModel)]="formatSelected"
+          name="formatSelected"
+          value="today"
+          style="height: 40%"
+          (change)="onTypeChange($event)"
+        />
+        <p class="radio-label">Today</p>
+      </div>
+      <div class="col-md-4 d-flex">
+        <input
+          type="radio"
+          [(ngModel)]="formatSelected"
+          name="formatSelected"
+          value="week"
+          style="height: 40%"
+          (change)="onTypeChange($event)"
+        />
+        <p class="radio-label">Last 7 Days</p>
+      </div>
+      <div class="col-md-4 d-flex">
+        <input
+          type="radio"
+          [(ngModel)]="formatSelected"
+          name="formatSelected"
+          value="month"
+          style="height: 40%"
+          (change)="onTypeChange($event)"
+        />
+        <p class="radio-label">Last 30 Days</p>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-4 offset-md-2">
+    <div class="card" [ngClass]="accountData.length > 0 ? 'fix-height' : ''">
+      <div class="card-body">
+        <h5 class="card-title">PAYOUT BY STATUS</h5>
+        <div class="show-chart" *ngIf="accountData.length > 0">
+          <ngx-charts-pie-chart
+            [view]="view"
+            [results]="accountData"
+            [gradient]="gradient"
+            [doughnut]="true"
+            [legend]="showLegend"
+            [legendTitle]="legendTitleStatus"
+            [labels] = "labels"
+            [maxLabelLength]=40
+            [animations]=true
+            [legendPosition]="legendPosition"
+            [arcWidth]="0.4"
+          >
+          <ng-template #tooltipTemplate let-model="model">
+            <p>{{model.name}}<br>
+              ₹ {{model.extra.amount}}</p>
+          </ng-template>
+          </ngx-charts-pie-chart>
+        </div>
+        <div *ngIf="accountData.length === 0" class="no-data mt-5">
+          No Account Data Found
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card" [ngClass]="payoutTypeData.length > 0 ? 'fix-height' : ''">
+      <div class="card-body">
+        <h5 class="card-title">PAYOUT BY MODE</h5>
+        <div class="show-chart" *ngIf="payoutTypeData.length > 0">
+          <ngx-charts-pie-chart
+            [view]="view"
+            [results]="payoutTypeData"
+            [gradient]="gradient"
+            [doughnut]="true"
+            [legend]="showLegend"
+            [legendTitle]="legendTitlePayout"
+            [labels] = "labels"
+            [maxLabelLength]=40
+            [animations]=true
+            [legendPosition]="legendPosition"
+            [arcWidth]="0.4"
+          >
+          <ng-template #tooltipTemplate let-model="model">
+            <p>{{model.name}}<br>
+              ₹ {{model.extra.amount}}</p>
+          </ng-template>
+          </ngx-charts-pie-chart>
+        </div>
+        <div *ngIf="payoutTypeData.length === 0" class="no-data mt-5">
+          No Account Data Found
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,167 @@
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Edit User Details</div>
+          <div class="container-fluid" *ngIf="loaded">
+            <form
+              [formGroup]="editForm"
+              (ngSubmit)="editUser()"
+              *ngIf="editForm"
+            >
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <div class="heading">User Name</div>
+                  <input
+                    type="text"
+                    class="form-control ip"
+                    placeholder="User Name"
+                    autocomplete="off"
+                    formControlName="userName"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.userName.errors
+                    }"
+                    readonly
+                    required
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.userName.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.userName.errors.required">
+                      User Name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Email ID</div>
+                  <input
+                    type="text"
+                    class="form-control ip"
+                    placeholder="Email"
+                    autocomplete="off"
+                    formControlName="userEmail"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.userEmail.errors
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.userEmail.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.userEmail.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="f.userEmail.errors.pattern">
+                      Enter Valid Email
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <div class="heading">Mobile Number</div>
+                  <!-- <input class="ip" type="text" type="text" class="form-control ip" placeholder="Phone Number"
+                    autocomplete="userPhone" formControlName="userPhone" ng2TelInput
+                    [ng2TelInputOptions]="{initialCountry: 'in'}"
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.userPhone.errors }"  (countryChange)="onCountryChange($event)" required> -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Phone Number"
+                    formControlName="userPhone"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.userPhone.errors
+                    }"
+                    required
+                    (keypress)="isNumber($event)"
+                    maxlength="15"
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.userPhone.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.userPhone.errors.required">
+                      Phone Number is required
+                    </div>
+                    <div *ngIf="f.userPhone.errors.pattern">
+                      Please, Enter 10 digit Mobile Number
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Select Role</div>
+                  <ng-select
+                    [items]="categories"
+                    bindLabel="name"
+                    placeholder="Select Role"
+                    appendTo="body"
+                    multiple="true"
+                    formControlName="roles"
+                  >
+                  </ng-select>
+                  <div
+                    *ngIf="formSubmitted && f.roles.errors"
+                    style="
+                      width: 100%;
+                      margin-top: 0.25rem;
+                      font-size: 80%;
+                      color: #f86c6b;
+                    "
+                  >
+                    <div *ngIf="f.roles.errors.required">Role is required</div>
+                  </div>
+                  <!-- <div class="col-md-4" *ngFor="let category of categories; let i = index">
+                          <input type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="category.isSelected"
+                          (change)="selectActions($event.target.checked, category)"> &nbsp;
+                          <span class="text-muted">{{category.name}}</span>
+                      </div> -->
+                  <!-- <button (click)="getSelectedValue()">Get Selected Values</button> -->
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-md-1">
+                  <label class="switch switch-3d switch-primary">
+                    <div class="heading">Active</div>
+                    <input
+                      type="checkbox"
+                      class="switch-input"
+                      formControlName="userIsActive"
+                    />
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+                <div class="col-md-1" *ngIf="data?.userIsLocked">
+                  <label class="switch switch-3d switch-primary">
+                    <div class="heading">Block</div>
+                    <input
+                      type="checkbox"
+                      class="switch-input"
+                      formControlName="userIsLocked"
+                    />
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </form>
+            <div class="row mt-3">
+              <div class="col-md-3 offset-md-9">
+                <button class="btn btn-danger" (click)="close()">Cancel</button
+                >&nbsp;
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="editUser()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

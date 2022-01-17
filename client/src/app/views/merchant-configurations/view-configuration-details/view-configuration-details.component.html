@@ -1,0 +1,186 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-eye"></i> View Merchant Configurations
+  </div>
+  <div class="card-body" style="padding: 2rem">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="heading">
+          Merchant Id :
+          <span class="value">{{ merchantData?.merchantId }}</span>
+        </div>
+        <div></div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading">
+          Merchant Name :
+          <span class="value">
+            {{ merchantData?.merchantName | titlecase }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Payment Mode Supported :
+          <span class="value d-block">
+            <span *ngFor="let item of data?.paymentMode; let isLast = last">
+              {{
+                (data?.paymentMode?.length > 0 && !isLast ? item + " , " : item)
+                  | uppercase
+              }}
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading">
+          Payment Instrument Supported :
+          <span class="value">{{ data?.instruments }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="heading">
+          Minimum Payout Amount :
+          <span class="value"
+            >INR {{ data?.minPayoutAmount | number: "1.2-2" }}</span
+          >
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading">
+          Maximum Payout Amount :
+          <span class="value"
+            >INR {{ data?.maxPayoutAmount | number: "1.2-2" }}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="heading">
+          Low Balance Threshold :
+          <span class="value"
+            >INR {{ data?.lowBalanceThreshold | number: "1.2-2" }}</span
+          >
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Enable Insta Pay Checker
+          <span class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="payChecker"
+              disabled
+              [checked]="data?.enableInstaPayChecker ? true : null"
+            />
+            <label class="custom-control-label" for="payChecker"></label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Enable Self Pay Checker
+          <span class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="selfPayChecker"
+              disabled
+              [checked]="data?.enableSelfPayChecker ? true : null"
+            />
+            <label class="custom-control-label" for="selfPayChecker"></label>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Enable Cancel Payout Checker
+          <span class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="cancelPayoutChecker"
+              disabled
+              [checked]="data?.enableCancelPayChecker ? true : null"
+            />
+            <label
+              class="custom-control-label"
+              for="cancelPayoutChecker"
+            ></label>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Enable Close Account Checker
+          <span class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="closeAcChecker"
+              disabled
+              [checked]="data?.enableCloseAcctChecker ? true : null"
+            />
+            <label class="custom-control-label" for="closeAcChecker"></label>
+          </span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="heading d-flex">
+          Enable API Pay Checker
+          <span class="custom-control custom-switch">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              id="apiPayChecker"
+              disabled
+              [checked]="data?.enableAPIPayChecker ? true : null"
+            />
+            <label class="custom-control-label" for="apiPayChecker"></label>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5"></div>
+      <div class="col-md-5"></div>
+      <div class="col-md-2 d-flex">
+        <button
+          type="button"
+          class="btn btn-block btn-primary p-2 mt-2"
+          *appUserAccess="[roleAccess.editMerchantConfigurations]"
+          (click)="editConfiguration()"
+        >
+          Edit
+        </button>
+        <!-- <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button> -->
+      </div>
+    </div>
+  </div>
+</div>

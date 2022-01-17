@@ -1,0 +1,94 @@
+<app-header
+  [navbarBrandRouterLink]="['/dashboard']"
+  [fixed]="true"
+  [navbarBrandFull]="{
+    src: 'assets/img/payphi.jpg',
+    height: 54,
+    alt: 'PayPhi'
+  }"
+  [navbarBrandMinimized]="{
+    src: 'assets/img/payphi.jpg',
+    width: 30,
+    height: 30,
+    alt: 'PayPhi'
+  }"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'lg'"
+  [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false"
+>
+  <ul class="nav navbar-nav ml-auto">
+    <li style="font-weight: 500">Welcome {{ userName }}</li>
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a
+        class="nav-link"
+        data-toggle="dropdown"
+        href="#"
+        role="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        dropdownToggle
+        (click)="(false)"
+      >
+        <img
+          src="assets/img/main.png"
+          class="img-avatar"
+          alt="{{ userName }}"
+        />
+        <!-- ab -->
+        <!-- <img src="assets/img/avatars/main.png" class="img-avatar" alt="{{userName}}" /> -->
+        <!-- <i class="fa fa-user-circle-o" title="{{userName}}" style="font-size: 25px;"></i> -->
+      </a>
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        *dropdownMenu
+        aria-labelledby="simple-dropdown"
+      >
+        <div class="dropdown-header text-center">
+          <strong>{{ userName }}</strong
+          ><br /><strong>{{ userRole }}</strong>
+        </div>
+        <a class="dropdown-item" (click)="logout()" style="cursor: pointer"
+          ><i class="fa fa-sign-out"></i>Logout</a
+        >
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body" style="overflow: auto">
+  <app-sidebar
+    #appSidebar
+    [fixed]="true"
+    [display]="'lg'"
+    [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)"
+  >
+    <app-sidebar-nav
+    *ngIf="showNav"
+      [navItems]="navItems"
+      [perfectScrollbar]
+      [disabled]="appSidebar.minimized"
+    ></app-sidebar-nav>
+    <!-- <img src="assets/img/dashboard_logo2.png" class="img-fluid" /> -->
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <!-- breaking change 'cui-breadcrumb' -->
+    <cui-breadcrumb>
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu d-md-down-none">
+        <div
+          class="btn-group"
+          role="group"
+          aria-label="Button group with nested dropdown"
+        ></div>
+      </li>
+    </cui-breadcrumb>
+    <div class="container-fluid" style="max-height: 80vh">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.container-fluid -->
+  </main>
+</div>

@@ -1,0 +1,62 @@
+@import "../../../../scss/style.scss";
+.table-row {
+  cursor: pointer;
+}
+.fa-plus-circle {
+  cursor: pointer;
+}
+table {
+  font-size: $font-size;
+}
+.item-number {
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.item-number-active {
+  background-color: #2199e8;
+  color: white;
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.heading {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: $heading-color;
+}
+.value {
+  font-weight: 500;
+  font-size: 0.8rem;
+  // text-transform: uppercase;
+  color: $value-color;
+}
+
+.radio-label {
+  font-size: 0.8rem;
+  padding-left: 0.8rem;
+  margin-bottom: 2rem;
+}
+.input-group {
+  padding: 0 !important;
+}
+.m-t-2 {
+  margin-top: 1rem;
+}
+.req-error {
+  color: red;
+  font-size: 0.8rem;
+}
+.pa-1 {
+  padding: 1rem;
+}

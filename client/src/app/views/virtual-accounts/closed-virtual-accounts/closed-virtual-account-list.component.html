@@ -1,0 +1,133 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> {{ headingText }}
+    </div>
+    <div class="card-body">
+      <table class="table table-striped table-hover table-responsive-lg">
+        <thead>
+          <tr>
+            <th style="width: 30%">Payout Account Id</th>
+            <th style="width: 50%">Reason for Closure</th>
+            <th
+              style="width: 20%"
+              class="text-center"
+              *appUserAccess="[roleAccess.actionAccountClosure]"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="collection?.length > 0">
+          <tr
+            *ngFor="
+              let item of collection
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: p }
+            "
+            class="table-row"
+          >
+            <td class="text-left">
+              {{ item.virtualAccountID }}
+            </td>
+            <td>{{ item.closeReason }}</td>
+            <td
+              class="text-center"
+              *appUserAccess="[roleAccess.actionAccountClosure]"
+            >
+              <span
+                class="badge badge-success"
+                title="Approve"
+                (click)="approveClosePA(item.virtualAccountID, 'APPROVE')"
+              >
+                Approve
+              </span>
+              <span
+                class="badge badge-danger ml-1r"
+                title="Reject"
+                (click)="approveClosePA(item.virtualAccountID, 'REJECT')"
+              >
+                Reject
+              </span>
+              <!-- <i
+                class="fa fa-check ml-3"
+                aria-hidden="true"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Approve"
+                *appUserAccess="[roleAccess.actionAccountClosure]"
+                (click)="approveClosePA(item.virtualAccountID, 'APPROVE')"
+              ></i>
+              <i
+                class="fa fa-close ml-3"
+                aria-hidden="true"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Reject"
+                *appUserAccess="[roleAccess.actionAccountClosure]"
+                (click)="approveClosePA(item.virtualAccountID, 'REJECT')"
+              ></i> -->
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="collection?.length === 0">
+          <tr class="text-center no-data">
+            <td colspan="3">No Data Found!</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mt-1">
+            <div
+              [ngClass]="
+                itemsPerPage == 10 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(10)"
+            >
+              10
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 15 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(15)"
+            >
+              15
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 20 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(20)"
+            >
+              20
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 25 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(25)"
+            >
+              25
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <pagination-controls
+            class="float-right mr-1"
+            (pageChange)="getPage((p = $event))"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

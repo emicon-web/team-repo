@@ -1,0 +1,22 @@
+.back {
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.back-label {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.title {
+  margin-top: 3%;
+  font-weight: 600;
+}
+.input-group-prepend {
+  display: none;
+}
+
+::ng-deep .iti--allow-dropdown {
+  width: 100%;
+}
+
+::ng-deep .ng-select {
+  width: 100%;
+}

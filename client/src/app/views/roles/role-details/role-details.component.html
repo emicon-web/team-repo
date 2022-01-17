@@ -1,0 +1,80 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Role Details</div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="pair mb-3 p-3">
+                  <div class="heading">Role Id</div>
+                  <div class="value">{{ data?.id }}</div>
+                </div>
+                <div class="pair mb-3 p-3">
+                  <div class="heading">Role Name</div>
+                  <div class="value">{{ data?.name }}</div>
+                </div>
+                <div class="pair mb-3 p-3">
+                  <div class="heading">Role Description</div>
+                  <div class="value">{{ data?.description }}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="pair mb-3 p-3">
+                  <div class="heading">Role Owner Id</div>
+                  <div class="value">{{ data?.roleCreatedBy }}</div>
+                </div>
+                <div class="pair mb-3 p-3">
+                  <div class="heading">Actions</div>
+                  <div class="value">
+                    <div *ngFor="let actions of data?.actions">
+                      {{ actions.name }}
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="pair mb-3 p-3">
+                  <div class="heading">Mobile Number</div>
+                  <div class="value">986534343</div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 d-flex">
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            *appUserAccess="[roleAccess.editRoles]"
+            (click)="editRole()"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-block btn-danger p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+        </div>
+        <!-- <button type="button" class="btn btn-block btn-primary p-2">GENERATE MFA KEY</button>
+          <button type="button" class="btn btn-block btn-primary p-2">DOWNLOAD MFA KEY</button> -->
+      </div>
+    </div>
+  </div>
+</div>

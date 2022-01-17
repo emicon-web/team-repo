@@ -1,0 +1,244 @@
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Edit Merchant Configurations</div>
+          <div class="container-fluid">
+            <div class="row mt-1">
+              <div class="col-md-6">
+                <div class="heading">Merchant Id</div>
+                <div class="value">
+                  {{ merchantData?.merchantId }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="heading">Merchant Name</div>
+                <div class="value">
+                  {{ merchantData?.merchantName | titlecase }}
+                </div>
+              </div>
+            </div>
+            <form [formGroup]="editForm">
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <div class="heading">Payout Mode Supported</div>
+                  <ng-select
+                    [items]="paymentMode"
+                    bindLabel="label"
+                    bindValue="value"
+                    placeholder="Select Payout Mode"
+                    appendTo="body"
+                    multiple="true"
+                    formControlName="paymentMode"
+                    [(ngModel)]="merchantConfiguration.paymentMode"
+                  >
+                  </ng-select>
+                  <div
+                    *ngIf="formSubmitted && f.paymentMode.errors"
+                    style="
+                      width: 100%;
+                      margin-top: 0.25rem;
+                      font-size: 80%;
+                      color: #f86c6b;
+                    "
+                  >
+                    <div *ngIf="f.paymentMode.errors.required">
+                      Payout Mode is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Payout Instruments Supported</div>
+                  <ng-select
+                    [items]="instruments"
+                    bindLabel="label"
+                    bindValue="value"
+                    placeholder="Select Payout Instruments"
+                    appendTo="body"
+                    multiple="true"
+                    formControlName="instruments"
+                    [(ngModel)]="merchantConfiguration.instruments"
+                  >
+                  </ng-select>
+                  <div
+                    *ngIf="formSubmitted && f.instruments.errors"
+                    style="
+                      width: 100%;
+                      margin-top: 0.25rem;
+                      font-size: 80%;
+                      color: #f86c6b;
+                    "
+                  >
+                    <div *ngIf="f.instruments.errors.required">
+                      Payout Instrument is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <div class="heading">Minimum Payout Amount</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="1000.00"
+                    formControlName="minPayoutAmount"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.minPayoutAmount.errors
+                    }"
+                    required
+                    IsDecimal
+                    [(ngModel)]="merchantConfiguration.minPayoutAmount"
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.minPayoutAmount.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.minPayoutAmount.errors.required">
+                      Minimum payout amount is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Maximum Payout Amount</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="50000.00"
+                    formControlName="maxPayoutAmount"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.maxPayoutAmount.errors
+                    }"
+                    required
+                    IsDecimal
+                    [(ngModel)]="merchantConfiguration.maxPayoutAmount"
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.maxPayoutAmount.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.maxPayoutAmount.errors.required">
+                      Maximum payout amount is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <div class="heading">Low Balance Threshold</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="100000.00"
+                    formControlName="lowBalanceThreshold"
+                    [ngClass]="{
+                      'is-invalid':
+                        formSubmitted && f.lowBalanceThreshold.errors
+                    }"
+                    required
+                    IsDecimal
+                    [(ngModel)]="merchantConfiguration.lowBalanceThreshold"
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.lowBalanceThreshold.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.lowBalanceThreshold.errors.required">
+                      Low Balance Threshold is required
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Enable Insta Pay Checker</div>
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="instaPay"
+                      formControlName="enableInstaPayChecker"
+                      (change)="onToggle($event, 'enableInstaPayChecker')"
+                    />
+                    <label class="custom-control-label" for="instaPay"></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <div class="heading">Enable Self Pay Checker</div>
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="selfPay"
+                      formControlName="enableSelfPayChecker"
+                      (change)="onToggle($event, 'enableSelfPayChecker')"
+                    />
+                    <label class="custom-control-label" for="selfPay"></label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Enable Cancel Payout Checker</div>
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="cancelPayout"
+                      formControlName="enableCancelPayChecker"
+                      (change)="onToggle($event, 'enableCancelPayChecker')"
+                    />
+                    <label
+                      class="custom-control-label"
+                      for="cancelPayout"
+                    ></label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-md-6">
+                  <div class="heading">Enable Close Account Checker</div>
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="closeAc"
+                      formControlName="enableCloseAcctChecker"
+                      (change)="onToggle($event, 'enableCloseAcctChecker')"
+                    />
+                    <label class="custom-control-label" for="closeAc"></label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="heading">Enable API Pay Checker</div>
+                  <div class="custom-control custom-switch">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="apiPay"
+                      formControlName="enableAPIPayChecker"
+                      (change)="onToggle($event, 'enableAPIPayChecker')"
+                    />
+                    <label class="custom-control-label" for="apiPay"></label>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row mt-1">
+              <div class="col-md-3 offset-md-9">
+                <button class="btn btn-danger" (click)="close()">Cancel</button>
+                &nbsp;
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="editConfiguration()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

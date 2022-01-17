@@ -1,0 +1,29 @@
+@import "../../../../scss/style.scss";
+
+.banner {
+  padding: 18px;
+  font-weight: 700;
+}
+.back-label {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.heading {
+  font-weight: 600;
+  font-size: 0.9rem;
+  // text-transform: uppercase;
+  color: $heading-color;
+}
+.value {
+  font-weight: 500;
+  font-size: 0.8rem;
+  // text-transform: uppercase;
+  color: $value-color;
+}
+.back-icon {
+  cursor: pointer;
+}
+
+.error-text {
+  color: red;
+  font-weight: 500;
+}

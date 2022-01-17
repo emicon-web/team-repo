@@ -1,0 +1,96 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles with default layout.
+// If you are going to use dark layout please comment next line
+@import "~@coreui/coreui-pro/scss/coreui";
+
+// Import styles with dark layout
+// If you want to use dark layout uncomment next line
+//@import "~@coreui/coreui-pro/scss/themes/dark/coreui-dark";
+
+// If you want to add something do it here
+@import "custom";
+
+// Spinkit
+$spinkit-spinner-color: $body-color;
+@import "~spinkit/scss/spinkit.scss";
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+$font-size: 0.8rem;
+$font-color: gray;
+$heading-color: #222222;
+$value-color: #585454;
+
+.d-flex {
+  display: flex;
+}
+
+.d-block {
+  display: block;
+}
+
+.my-1-auto {
+  margin: auto;
+}
+
+.btn-rt {
+  float: right;
+}
+
+.action-btns {
+  align-items: flex-end;
+  padding-left: 0 !important;
+}
+
+.ml-1r {
+  margin-left: 1rem;
+}
+
+.btn-padding {
+  padding: 0.5rem 3rem;
+}
+
+.mt-2r {
+  margin-top: 2rem !important;
+}
+
+.mb-point5 {
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+
+.pt-point5 {
+  padding-top: 0.5rem;
+}
+
+.no-data {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.swal2-styled.swal2-confirm {
+  padding: 0.4rem 3.2rem !important;
+}
+
+.swal2-styled.swal2-cancel {
+  padding: 0.4rem 2.8rem !important;
+}
+
+.pp-2 {
+  padding: 1.5rem !important;
+}
+
+.data-field {
+  color: #3e3838;
+}

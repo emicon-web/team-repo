@@ -1,0 +1,264 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Self Payout</div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">
+                    Merchant Id:
+                    <span class="value">
+                      {{ merchantData.merchantId }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">
+                    Merchant Name:
+                    <span class="value">
+                      {{ merchantData.merchantName | titlecase }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">
+                    Merchant Payout Id :
+                    <span class="value">{{ merchantPayoutId }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3 d-flex">
+                  <div class="heading" style="width: 45%">
+                    Select Payout Account :
+                  </div>
+                  <div class="value">
+                    <select
+                      class="form-select form-control"
+                      name="virtualId"
+                      [ngModelOptions]="{ standalone: true }"
+                      (change)="getDataForPayoudId($event)"
+                      [(ngModel)]="virtualId"
+                      style="width: 100%"
+                    >
+                      <option selected value="">Select Payout Account</option>
+                      <option
+                        value="{{ item.virtualAccountID }}"
+                        *ngFor="let item of allPayoutIds"
+                      >
+                        {{ item?.virtualAccountID }}
+                      </option>
+                    </select>
+                    <p class="error-text" *ngIf="errorAccountId">
+                      Please select Payout Account Id
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="pair mb-2 p-3">
+                  <div class="heading">
+                    Description :
+                    <span class="value">{{ data?.description }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-div mt-3">
+              <form [formGroup]="selfPayoutForm">
+                <div class="container-fluid">
+                  <div class="row mb-3">
+                    <div class="input-group col-md-4 d-block">
+                      <label class="heading">Beneficiary Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Beneficiary Name"
+                        autocomplete="off"
+                        formControlName="beneficiaryName"
+                        [ngClass]="{
+                          'is-invalid':
+                            formSubmitted && f.beneficiaryName.errors
+                        }"
+                        required
+                        style="width: 100%"
+                      />
+                      <div
+                        *ngIf="formSubmitted && f.beneficiaryName.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.beneficiaryName.errors.required">
+                          Beneficiary Name is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group col-md-4 d-block">
+                      <label class="heading">Beneficiary Phone</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Beneficiary Phone"
+                        autocomplete="off"
+                        formControlName="beneficiaryPhone"
+                        [ngClass]="{
+                          'is-invalid':
+                            formSubmitted && f.beneficiaryPhone.errors
+                        }"
+                        required
+                        style="width: 100%"
+                        (keypress)="isNumber($event)"
+                        maxlength="10"
+                      />
+                      <div
+                        *ngIf="formSubmitted && f.beneficiaryPhone.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.beneficiaryPhone.errors.required">
+                          Beneficiary Phone is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group col-md-4 d-block">
+                      <label class="heading">Beneficiary Email</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Beneficiary Email"
+                        autocomplete="off"
+                        formControlName="beneficiaryEmail"
+                        [ngClass]="{
+                          'is-invalid':
+                            formSubmitted && f.beneficiaryEmail.errors
+                        }"
+                        required
+                        style="width: 100%"
+                      />
+                      <div
+                        *ngIf="formSubmitted && f.beneficiaryEmail.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.beneficiaryEmail.errors.required">
+                          Beneficiary Email is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-4">
+                      <label class="heading">Payment Amount</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        autocomplete="off"
+                        formControlName="paymentAmount"
+                        [ngClass]="{
+                          'is-invalid': formSubmitted && f.paymentAmount.errors
+                        }"
+                        required
+                        style="width: 100%"
+                        placeholder="0.00"
+                        IsDecimal
+                      />
+                      <div
+                        *ngIf="formSubmitted && f.paymentAmount.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.paymentAmount.errors.required">
+                          Payment Amount is required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="heading">Purpose of Payout</label>
+                      <select
+                        class="form-select form-control"
+                        name="payoutPurpose"
+                        formControlName="payoutPurpose"
+                        id="payoutPurpose"
+                        style="width: 100%"
+                        (change)="onPurposeChange($event.target.value)"
+                      >
+                        <option value="" selected>Select Purpose</option>
+                        <option value="refund">Refund</option>
+                        <option value="cashback">Cashback</option>
+                        <option value="bill">Bill Payment</option>
+                        <option value="loan">Loan disbursal</option>
+                        <option value="other">Other</option>
+                      </select>
+                      <div *ngIf="payoutError" class="error-text">
+                        Please select purpose of payout
+                      </div>
+                    </div>
+                    <div class="col-md-4" *ngIf="showOtherInput">
+                      <label class="heading">Purpose</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Payout purpose"
+                        autocomplete="off"
+                        formControlName="payoutPurposeOther"
+                        [ngClass]="{
+                          'is-invalid':
+                            formSubmitted && f.payoutPurposeOther.errors
+                        }"
+                        required
+                        style="width: 100%"
+                      />
+                      <div
+                        *ngIf="formSubmitted && f.payoutPurposeOther.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.payoutPurposeOther.errors.required">
+                          Payout purpose is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 d-flex">
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2"
+            (click)="saveSelfPayout()"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

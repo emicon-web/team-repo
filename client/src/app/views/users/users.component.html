@@ -1,0 +1,229 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify ml-2 mt-3"></i> {{ headingText }}
+      <!-- <button
+        class="btn btn-primary float-right"
+        (click)="togl()"
+        *ngIf="collection?.length > 0"
+      >
+        {{ btnText }}
+      </button> -->
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div
+          class="col-md-3"
+          *appUserAccess="[roleAccess.addUser]"
+          [ngClass]="{ 'col-md-4': !showCol }"
+        >
+          <i
+            class="fa fa-plus-circle fa-2x mt-1 ml-1"
+            routerLink="/users/add-user"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Add User"
+            aria-hidden="true"
+          ></i>
+        </div>
+        <div class="col-md-3" *ngIf="showCol">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filterQueryIssuer"
+              placeholder="Issuer Id"
+            />
+          </div>
+        </div>
+        <div class="col-md-3" [ngClass]="{ 'col-md-4': !showCol }">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filterQueryEmail"
+              placeholder="Email Id"
+            />
+          </div>
+        </div>
+        <div class="col-md-3" [ngClass]="{ 'col-md-4': !showCol }">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="filterQuery"
+              placeholder="User Id"
+            />
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover table-responsive-lg">
+        <thead>
+          <tr>
+            <th style="width: 10%">Id</th>
+            <th style="width: 20%">User Id</th>
+            <th style="width: 20%" *ngIf="showCol">Issuer Id</th>
+            <th style="width: 35%">Email</th>
+            <th style="width: 20%">Role</th>
+            <th style="width: 10%" *appUserAccess="[roleAccess.deleteUser]">
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let item of collection
+                | dataFilter: filterQuery
+                | dataFilterEmail: filterQueryEmail
+                | dataFilterIssuer: filterQueryIssuer
+                | paginate: { itemsPerPage: itemsPerPage, currentPage: p }
+            "
+            class="table-row"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="View Detail"
+          >
+            <td class="text-left" (click)="viewDetails(item.id)">
+              {{ item.id }}
+            </td>
+            <td (click)="viewDetails(item.id)">{{ item.userName }}</td>
+            <td *ngIf="showCol" (click)="viewDetails(item.id)">
+              {{ item.issuerId }}
+            </td>
+            <td (click)="viewDetails(item.id)">{{ item.userEmail }}</td>
+            <td (click)="viewDetails(item.id)">
+              <div *ngFor="let role of item.roles">{{ role.name }}</div>
+            </td>
+            <td *appUserAccess="[roleAccess.deleteUser]">
+              <span
+                class="badge badge-danger ml-1r"
+                *ngIf="doNotShowDelete != item?.id"
+                title="Delete User"
+                (click)="confirmDelete(item.id)"
+              >
+                Delete
+              </span>
+              <!-- <i
+                class="fa fa-trash ml-3"
+                aria-hidden="true"
+                *ngIf="doNotShowDelete != item?.id"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Delete User"
+                data-toggle="modal"
+                (click)="confirmDelete(item.id)"
+              ></i> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mt-1">
+            <div
+              [ngClass]="
+                itemsPerPage == 10 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(10)"
+            >
+              10
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 15 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(15)"
+            >
+              15
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 20 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(20)"
+            >
+              20
+            </div>
+            <div
+              [ngClass]="
+                itemsPerPage == 25 ? 'item-number-active' : 'item-number'
+              "
+              (click)="itemOnPage(25)"
+            >
+              25
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <pagination-controls
+            class="float-right mr-1"
+            (pageChange)="getPage((p = $event))"
+          ></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #dangerModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are You Sure You Want To Delete ?</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="dangerModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div> -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="dangerModal.hide()"
+        >
+          Discard
+        </button>
+        <button type="button" class="btn btn-primary" (click)="deleteUser()">
+          Yes
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

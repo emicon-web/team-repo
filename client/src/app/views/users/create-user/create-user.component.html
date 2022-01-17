@@ -1,0 +1,191 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-fade"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+
+<div class="animated fadeIn">
+  <div class="card p-5 mt-1" *ngIf="loaded">
+    <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+      <h4>Add User</h4>
+      <div class="row mb-3 mt-3">
+        <div class="input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="icon-user"></i></span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="First Name"
+            autocomplete="off"
+            formControlName="userFirstName"
+            [ngClass]="{
+              'is-invalid': formSubmitted && f.userFirstName.errors
+            }"
+            required
+          />
+          <div
+            *ngIf="formSubmitted && f.userFirstName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.userFirstName.errors.required">
+              First Name is required
+            </div>
+            <div
+              *ngIf="
+                f.userFirstName.errors.minlength ||
+                f.userFirstName.errors.maxlength
+              "
+            >
+              First Name size should be 3 to 20
+            </div>
+          </div>
+        </div>
+        <div class="input-group col-md-6">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="icon-user"></i></span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Last Name"
+            autocomplete="off"
+            formControlName="userLastName"
+            [ngClass]="{ 'is-invalid': formSubmitted && f.userLastName.errors }"
+            required
+          />
+          <div
+            *ngIf="formSubmitted && f.userLastName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.userLastName.errors.required">
+              Last Name is required
+            </div>
+            <div
+              *ngIf="
+                f.userLastName.errors.minlength ||
+                f.userLastName.errors.maxlength
+              "
+            >
+              Last Name size should be 3 to 20
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="input-group col-md-9">
+              <input type="text" class="form-control" placeholder="Username" autocomplete="off" formControlName="userName"
+                [ngClass]="{ 'is-invalid': formSubmitted && f.userName.errors }" required />
+              <div *ngIf="formSubmitted && f.userName.errors" class="invalid-feedback">
+                <div *ngIf="f.userName.errors.required">User Name is required</div>
+                <div *ngIf="f.userName.errors.minlength || f.userName.errors.maxlength">
+                  User Name size should be 3 to 20
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control" value={{shortCode}} disabled>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group col-md-6">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            autocomplete="off"
+            formControlName="userEmail"
+            [ngClass]="{ 'is-invalid': formSubmitted && f.userEmail.errors }"
+            required
+          />
+          <div
+            *ngIf="formSubmitted && f.userEmail.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.userEmail.errors.required">Email is required</div>
+            <div *ngIf="f.userEmail.errors.pattern">Enter Valid Email</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="input-group col-md-6">
+          <!-- <input
+            type="text"
+            class="form-control"
+            placeholder="Phone Number"
+            autocomplete="off"
+            ng2TelInput
+            [ng2TelInputOptions]="{ initialCountry: 'in' }"
+            style="width: 100%"
+            formControlName="userPhone"
+            [ngClass]="{ 'is-invalid': formSubmitted && f.userPhone.errors }"
+            (countryChange)="onCountryChange($event)"
+            (keypress)="isNumber($event)"
+            maxlength="10"
+          /> -->
+          <input type="text" class="form-control" placeholder="Phone Number" autocomplete="off"  style="width: 100%" formControlName="userPhone"
+            [ngClass]="{ 'is-invalid': formSubmitted && f.userPhone.errors }"
+            (keypress)="isNumber($event)" maxlength="10" />
+          <div
+            *ngIf="formSubmitted && f.userPhone.errors"
+            style="
+              width: 100%;
+              margin-top: 0.25rem;
+              font-size: 80%;
+              color: #f86c6b;
+            "
+          >
+            <div *ngIf="f.userPhone.errors.required">
+              Phone Number is required
+            </div>
+            <!-- <div *ngIf="f.userPhone.errors.pattern">Please, Enter 10 digit Mobile Number</div> -->
+          </div>
+        </div>
+        <div class="input-group col-md-6">
+          <ng-select
+            [items]="categories"
+            bindLabel="name"
+            placeholder="Select Roles"
+            appendTo="body"
+            multiple="true"
+            formControlName="roles"
+          >
+          </ng-select>
+          <div
+            *ngIf="formSubmitted && f.roles.errors"
+            style="
+              width: 100%;
+              margin-top: 0.25rem;
+              font-size: 80%;
+              color: #f86c6b;
+            "
+          >
+            <div *ngIf="f.roles.errors.required">Role is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 d-flex">
+          <button type="submit" class="btn btn-block btn-primary p-2 mt-2">
+            Create
+          </button>
+          <button
+            type="button"
+            class="btn btn-block btn-primary p-2 mt-2 ml-1r"
+            (click)="goBack()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+@import "../../../../scss/style.scss";
+.table-row {
+  cursor: pointer;
+}
+.fa-plus-circle {
+  cursor: pointer;
+}
+table {
+  font-size: $font-size;
+}
+.item-number {
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.item-number-active {
+  background-color: #2199e8;
+  color: white;
+  display: inline-block;
+  border: 1px solid rgba($color: grey, $alpha: 0.7);
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  cursor: pointer;
+}
+.heading {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: $heading-color;
+}
+.value {
+  font-weight: 500;
+  font-size: 0.8rem;
+  // text-transform: uppercase;
+  color: $value-color;
+}
+
+.radio-label {
+  font-size: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+.input-group {
+  padding: 0 !important;
+}
+.m-t-2 {
+  margin-top: 1rem;
+}
+.req-error {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.col-xs-15 {
+  width: 20%;
+  float: left;
+}
+@media (min-width: 768px) {
+  .col-sm-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-15 {
+    width: 20%;
+    float: left;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-15 {
+    width: 20%;
+    float: left;
+  }
+}
+.err {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #f86c6b;
+}
+
+.mb-negative-2 {
+  margin-bottom: -1.5rem;
+}

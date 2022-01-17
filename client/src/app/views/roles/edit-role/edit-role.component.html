@@ -1,0 +1,118 @@
+<div class="card">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="banner bg-primary">Edit Role Details</div>
+          <div class="container-fluid" *ngIf="loading">
+            <form
+              [formGroup]="editForm"
+              (ngSubmit)="editRole()"
+              *ngIf="showForm"
+            >
+              <div class="row mb-4 mt-4">
+                <div class="input-group col-md-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Role Id (Eg- ROL32134)"
+                    autocomplete="off"
+                    formControlName="id"
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.id.errors }"
+                    readonly
+                    required
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.id.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.id.errors.required">Role is required</div>
+                  </div>
+                </div>
+                <div class="input-group col-md-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Role Name"
+                    autocomplete="off"
+                    formControlName="name"
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.name.errors }"
+                    readonly
+                    required
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.name.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.name.errors.required">
+                      Role Name is required
+                    </div>
+                  </div>
+                </div>
+                <div class="input-group col-md-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Role Description"
+                    autocomplete="off"
+                    formControlName="description"
+                    [ngClass]="{
+                      'is-invalid': formSubmitted && f.description.errors
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="formSubmitted && f.description.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.description.errors.required">
+                      Role Description is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row ml-2">
+                <div class="heading">Select Actions</div>
+              </div>
+              <div class="row ml-2">
+                <!-- <ng-select [items]="categories" bindLabel="name" placeholder="Select Actions" appendTo="body"
+                  multiple="true" formControlName="actions">
+                </ng-select> -->
+                <!-- <button (click)="getSelectedValue()">Get Selected Values</button> -->
+                <div class="row m-2">
+                  <div
+                    class="col-md-4"
+                    *ngFor="let category of categories; let i = index"
+                  >
+                    <input
+                      type="checkbox"
+                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="category.isSelected"
+                      (change)="selectActions($event.target.checked, category)"
+                    />
+                    &nbsp;
+                    <span class="text-muted">{{ category.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row mt-3">
+              <div class="col-md-3 offset-md-9">
+                <button type="cancel" class="btn btn-danger" (click)="close()">
+                  Cancel</button
+                >&nbsp;
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="editRole()"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
